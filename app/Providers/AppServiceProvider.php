@@ -10,7 +10,7 @@ use Illuminate\Translation\Translator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (config('app.env' === 'local')) {
+            URL::forceScheme('https');
+            # code...
+        }
         Schema::defaultStringLength(191);
 
         Paginator::useBootstrap();
@@ -62,12 +66,12 @@ class AppServiceProvider extends ServiceProvider
 
             return $trans;
         });
-        $dbConnectionStatus =dbConnectionStatus();
-        if ($dbConnectionStatus && Schema::hasTable('settings') && file_exists(storage_path('installed')) ) {
+        $dbConnectionStatus = dbConnectionStatus();
+        if ($dbConnectionStatus && Schema::hasTable('settings') && file_exists(storage_path('installed'))) {
             $timezone = Cache::rememberForever('settings.default_time_zone', function () {
                 return DB::table('settings')->where('name', 'default_time_zone')->value('val') ?? 'UTC';
             });
-    
+
             // Set the application timezone
             Config::set('app.timezone', $timezone);
             date_default_timezone_set($timezone);
