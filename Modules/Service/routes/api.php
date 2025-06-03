@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Modules\Service\Http\Controllers\Backend\API\ServiceController;
 
@@ -19,6 +20,3 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('service-detail', [ServiceController::class, 'serviceDetails']);
     Route::get('search-service', [ServiceController::class, 'searchServices']);
 });
-?>
-
-

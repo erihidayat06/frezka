@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Modules\Subscriptions\Http\Controllers\Backend\API\PlanController;
 use Modules\Subscriptions\Http\Controllers\Backend\API\PlanLimitationController;
@@ -12,6 +13,3 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('planlimitation', PlanLimitationController::class);
     Route::apiResource('plans', PlanController::class);
 });
-?>
-
-
