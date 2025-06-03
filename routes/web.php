@@ -1,31 +1,30 @@
 <?php
 
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FaqController;
-use App\Providers\RouteServiceProvider;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\RolePermission;
-use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\PaypalController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\StripeController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PlanTaxController;
-use App\Http\Controllers\ReportsController;
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\RazorpayController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\UpgradePlanController;
-use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\BranchController;
-use App\Http\Controllers\WebsiteSettingController;
-use App\Http\Controllers\Backend\BackendController;
-use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\NotificationsController;
+use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PlanTaxController;
+use App\Http\Controllers\RazorpayController;
+use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolePermission;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\WebsiteSettingController;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Route;
 use Modules\Frontend\Http\Controllers\FrontendController;
+use App\Http\Controllers\UpgradePlanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -285,6 +284,4 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'check.admin.plan']], 
     Route::get('paypal/payment/cancel', [PaypalController::class, 'cancel'])->name('paypal.payment.cancel');
     Route::get('paypal/payment/error', [PaypalController::class, 'error'])->name('paypal.payment.error');
 });
-
-
 Route::get('migrate', [BlogController::class, 'migration']);
