@@ -286,13 +286,5 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'check.admin.plan']], 
     Route::get('paypal/payment/error', [PaypalController::class, 'error'])->name('paypal.payment.error');
 });
 
-Route::get('/test-email', function () {
-    Mail::raw('This is a test OTP email', function ($message) {
-        $message->to('erihidayat549@gmail.com')
-            ->subject('Test OTP Email');
-    });
-
-    return 'Test email sent';
-});
 
 Route::get('migrate', [BlogController::class, 'migration']);
