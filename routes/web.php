@@ -35,26 +35,25 @@ use App\Http\Controllers\UpgradePlanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', [FrontendController::class, 'index'])->name('user.login');
 // Auth Routes
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 Route::get('storage-link', function () {
     return Artisan::call('storage:link');
 });
 
 
-Route::group(['middleware' => ['auth']], function () {
-
-});
+Route::group(['middleware' => ['auth']], function () {});
 
 
-Route::group(['middleware' => ['auth','check.admin.plan']], function () {
+Route::group(['middleware' => ['auth', 'check.admin.plan']], function () {
     Route::get('/apps', [BackendController::class, 'index'])->name('app.home');
     Route::get('notification-list', [NotificationsController::class, 'notificationList'])->name('notification.list');
     Route::get('notification-counts', [NotificationsController::class, 'notificationCounts'])->name('notification.counts');
 });
 
-Route::group(['prefix' => 'app', 'middleware' => ['auth','check.admin.plan']], function () {
+Route::group(['prefix' => 'app', 'middleware' => ['auth', 'check.admin.plan']], function () {
 
 
     Route::get('/date-time-formats', function () {
@@ -139,7 +138,6 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth','check.admin.plan']], f
         Route::get('payout-report-review', [ReportsController::class, 'payout_report_review'])->name('reports.payout-report-review');
         Route::get('staff-report-review', [ReportsController::class, 'staff_report_review'])->name('reports.staff-report-review');
         Route::get('order_booking_report_review', [ReportsController::class, 'order_booking_report_review'])->name('reports.order_booking_report_review');
-
     });
 
     /*
@@ -198,7 +196,6 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth','check.admin.plan']], f
                     Route::post('information', [UserController::class, 'update'])->name('information');
                     Route::post('change-password', [UserController::class, 'change_password'])->name('change_password');
                     Route::post('check-unique', [UserController::class, 'checkUnique'])->name('check_unique');
-
                 });
             });
             Route::get('my-profile/{vue_capture?}', [UserController::class, 'myProfile'])->name('my-profile')->where('vue_capture', '^(?!storage).*$');
@@ -269,26 +266,32 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth','check.admin.plan']], f
                 Route::get('/subscription-detail', [FrontendController::class, 'subscriptiondetail'])->name('subscription_detail');
                 Route::get('billing-page', [UpgradePlanController::class, 'billingPage'])->name('billing-page');
             });
-
         });
     });
-      // Stripe payment route
-      Route::get('/stripe/pay/{plan_id}', [StripeController::class, 'pay'])->name('stripe.pay');
-      Route::get('stripe/payment/success', [StripeController::class, 'success'])->name('stripe.payment.success');
-      Route::get('stripe/payment/cancel', [StripeController::class, 'cancel'])->name('stripe.payment.cancel');
+    // Stripe payment route
+    Route::get('/stripe/pay/{plan_id}', [StripeController::class, 'pay'])->name('stripe.pay');
+    Route::get('stripe/payment/success', [StripeController::class, 'success'])->name('stripe.payment.success');
+    Route::get('stripe/payment/cancel', [StripeController::class, 'cancel'])->name('stripe.payment.cancel');
 
-      // Razorpay payment route
-      Route::get('/razorpay/pay/{plan_id}', [RazorpayController::class, 'pay'])->name('razorpay.pay');
-      Route::get('razorpay/payment/success', [RazorpayController::class, 'success'])->name('razorpay.payment.success');
-      Route::get('razorpay/payment/cancel', [RazorpayController::class, 'cancel'])->name('razorpay.payment.cancel');
+    // Razorpay payment route
+    Route::get('/razorpay/pay/{plan_id}', [RazorpayController::class, 'pay'])->name('razorpay.pay');
+    Route::get('razorpay/payment/success', [RazorpayController::class, 'success'])->name('razorpay.payment.success');
+    Route::get('razorpay/payment/cancel', [RazorpayController::class, 'cancel'])->name('razorpay.payment.cancel');
 
-      // PayPal payment route
-      Route::get('/paypal/pay/{plan_id}', [PaypalController::class, 'pay'])->name('paypal.pay');
-      Route::get('paypal/payment/success', [PaypalController::class, 'success'])->name('paypal.payment.success');
-      Route::get('paypal/payment/cancel', [PaypalController::class, 'cancel'])->name('paypal.payment.cancel');
-      Route::get('paypal/payment/error', [PaypalController::class, 'error'])->name('paypal.payment.error');
-      
+    // PayPal payment route
+    Route::get('/paypal/pay/{plan_id}', [PaypalController::class, 'pay'])->name('paypal.pay');
+    Route::get('paypal/payment/success', [PaypalController::class, 'success'])->name('paypal.payment.success');
+    Route::get('paypal/payment/cancel', [PaypalController::class, 'cancel'])->name('paypal.payment.cancel');
+    Route::get('paypal/payment/error', [PaypalController::class, 'error'])->name('paypal.payment.error');
 });
-Route::get('migrate',[BlogController::class,'migration']);
 
+Route::get('/test-email', function () {
+    Mail::raw('This is a test OTP email', function ($message) {
+        $message->to('email_tujuan@example.com')
+            ->subject('Test OTP Email');
+    });
 
+    return 'Test email sent';
+});
+
+Route::get('migrate', [BlogController::class, 'migration']);
