@@ -287,7 +287,7 @@ Route::group(['prefix' => 'app', 'middleware' => ['auth', 'check.admin.plan']], 
 
 Route::get('/test-email', function () {
     Mail::raw('This is a test OTP email', function ($message) {
-        $message->to('email_tujuan@example.com')
+        $message->to('erihidayat549@gmail.com')
             ->subject('Test OTP Email');
     });
 
