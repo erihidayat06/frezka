@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Modules\Category\Http\Controllers\Backend\API\CategoryController;
 
@@ -10,6 +11,3 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('subcategory-detail', [CategoryController::class, 'subCategoryDetail']);
     Route::get('subcategories', [CategoryController::class, 'index_SubCategory']);
 });
-?>
-
-
